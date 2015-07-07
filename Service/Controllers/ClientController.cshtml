@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Twilio;
+using Twilio.TwiML;
+using Twilio.TwiML.Mvc;
+
+namespace Service.Controllers
+{
+	public class ClientController : Controller
+	{
+		public ActionResult Token(string clientName = "default")
+        {
+			string accountSid = "ACff71bf617679f168ecee29a0ff8adcf6";
+			string authToken = "9321b89d53418e5cb8e222629a5b417d";
+			string appSid = "AP2fd8695888be95de9039f7d87276ec50";
+
+			var capability = new TwilioCapability(accountSid, authToken);
+			capability.AllowClientIncoming(clientName);
+			capability.AllowClientOutgoing(appSid);
+
+			return Content(capability.GenerateToken());
+        }
+	}
+}
+
